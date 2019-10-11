@@ -8,16 +8,16 @@
                 var datos2 = [];
                 var datos3 = [];
                 var datos4 = [];
-                //var fecha =[];
                 var updateInterval = 500;
                 updateChart();
+                //funcion que actualiza los datos
                 function updateChart() {
-                    $.getJSON("dataNS2.php", function (result) {
+                    $.getJSON("dataNS7.php", function (result) {
                         if (dataLength !== result.length) {
-                            for (var i = dataLength; i <result.length ; i++) { //result.length    dataLength
+                            for (var i = dataLength; i <result.length ; i++) { 
 
                                 datos1.push({
-                                    x: new Date(parseInt(result[i].M)*1000), //result[i].todo
+                                    x: new Date(parseInt(result[i].M)*1000),
                                     y: parseFloat(result[i].T)
                                 })
                                 datos2.push({
@@ -38,9 +38,12 @@
                         }
                     });
                 }
+                //funcion que grafica los datos, se configuan propiedades de estos
                 var chart = new CanvasJS.Chart("chartContainer", {
+                      zoomEnabled: true,
+                      zoomType: "x", // change it to "xy" to enable zooming on both axes
                     title: {
-                        text: "Lectura Nodo Sensor 2"
+                        text: "Lectura Nodo sensor 7"
                     },
                     axisX: {
                         title: "Fecha y Hora",
@@ -54,7 +57,7 @@
 														suffix: "°C"
                             },
                             {
-                            title: "Humedad Relativa",
+                            title: "Humedad",
                             lineColor: "#369EAD",
                             tickColor: "#369EAD",
                             labelFontColor: "#369EAD",
@@ -77,8 +80,8 @@
                             markerSize: 0,
                             yValueFormatString: "##.##°C",
                             color: "#C24642",
-		                        axisYIndex: 0, //Defaults to Zero
-		                        name: "Temperatura Relativa",
+		                        axisYIndex: 0, 
+		                        name: "Temperatura",
                             dataPoints: datos1
 	                        	},
                           {				
@@ -87,8 +90,8 @@
                             yValueFormatString: "##,##%",
                             markerSize: 0,
                             color: "#368EAA",
-		                        axisYIndex: 1, //Defaults to Zero
-		                        name: "Humedad Relativa",
+		                        axisYIndex: 1,
+		                        name: "Humedad",
 		                        dataPoints: datos2
 	                        },
                           {type: "spline",
@@ -118,11 +121,13 @@
                              }
 	                          e.chart.render();
                             }
+                //funcion que actualiza los datos cada 500 mili segundos
                 setInterval(function () {
                     updateChart()
                 }, updateInterval);
             
             }
+            //obtiene propiedades para los graficos
             
         </script>
         <script type="text/javascript" src="assets/script/canvasjs.min.js"></script>

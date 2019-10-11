@@ -171,5 +171,59 @@ if (!$retry_value) {
 printf('Datos enviados a: NS6');
 }
 
+#guarda los valores para el NS7
+if($N === '7'){
+
+
+$result = mysqli_query("SELECT * FROM `ns7`", $db_connection);
+
+if (!$db_connection) {
+    die('No se ha podido conectar a la base de datos');
+}
+
+
+$M = $_GET['M'];
+$T = $_GET['T'];
+$H = $_GET['H'];
+$I = $_GET['I'];
+$O = $_GET['O'];
+
+
+$query = "INSERT INTO`ns7`(`M`,`T`,`H`,`I`,`O`)VALUES('$M','$T','$H','$I','$O')";
+$retry_value = mysqli_query($db_connection,$query);
+if (!$retry_value) {
+    die('Error: ' . mysqli_error($db_connection));
+}
+printf('Datos enviados a: NS7');
+}
+
+
+#guarda los valores para el NS8
+if($N === '8'){
+
+
+$result = mysqli_query("SELECT * FROM `ns8`", $db_connection);
+
+if (!$db_connection) {
+    die('No se ha podido conectar a la base de datos');
+}
+
+
+$M = $_GET['M'];
+$T = $_GET['T'];
+$H = $_GET['H'];
+$I = $_GET['I'];
+$O = $_GET['O'];
+
+
+$query = "INSERT INTO`ns8`(`M`,`T`,`H`,`I`,`O`)VALUES('$M','$T','$H','$I','$O')";
+$retry_value = mysqli_query($db_connection,$query);
+if (!$retry_value) {
+    die('Error: ' . mysqli_error($db_connection));
+}
+printf('Datos enviados a: NS8');
+}
+
+
 mysqli_close($db_connection);
 ?>

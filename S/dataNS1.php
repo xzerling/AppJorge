@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 //conexion con la base de datos
-$con = mysqli_connect("localhost", "root", "Jorge1995", "db_prueba");
+$con = mysqli_connect("citra-test.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com", "admin", "12345678", "citra");
 if (mysqli_connect_errno($con)) {
 //indica si existe un error al conectar con la base de datos
     echo "Failed to connect to DataBase: " . mysqli_connect_error();
@@ -9,7 +9,7 @@ if (mysqli_connect_errno($con)) {
 //crea un arreglo de datos
     $data_points = array();
     //obtiene los datos de la tabla NS1
-    $result = mysqli_query($con, "SELECT * FROM NS1"); 
+    $result = mysqli_query($con, "SELECT * FROM ns1"); 
     //mientras exista datos en la tabla
     while ($row = mysqli_fetch_array($result)) {
     //guarda los datos en un arreglo con los nombres M, T, H, I, O
