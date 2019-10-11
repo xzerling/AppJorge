@@ -1,0 +1,141 @@
+
+<html>
+    <head>
+        <script type="text/javascript">
+            window.onload = function () {
+                var dataLength = 0;
+                var datos1 = [];
+                var datos2 = [];
+                var datos3 = [];
+                var datos4 = [];
+                var updateInterval = 500;
+                updateChart();
+                //funcion que actualiza los datos
+                function updateChart() {
+                    $.getJSON("dataNS6.php", function (result) {
+                        if (dataLength !== result.length) {
+                            for (var i = dataLength; i <result.length ; i++) { 
+
+                                datos1.push({
+                                    x: new Date(parseInt(result[i].M)*1000),
+                                    y: parseFloat(result[i].T)
+                                })
+                                datos2.push({
+                                    x: new Date(parseInt(result[i].M)*1000),
+			                              y: parseFloat(result[i].H)
+                                })
+                                datos3.push({
+                                    x: new Date(parseInt(result[i].M)*1000),
+                                    y: parseFloat(result[i].I)
+                                }),
+                                datos4.push({
+                                    x: new Date(parseInt(result[i].M)*1000),
+			                              y: parseFloat(result[i].O)
+                                });
+                            }
+                            dataLength = result.length;
+                            chart.render();
+                        }
+                    });
+                }
+                //funcion que grafica los datos, se configuan propiedades de estos
+                var chart = new CanvasJS.Chart("chartContainer", {
+                      zoomEnabled: true,
+                      zoomType: "x", // change it to "xy" to enable zooming on both axes
+                    title: {
+                        text: "Lectura Nodo sensor 6 MP"
+                    },
+                    axisX: {
+                        title: "Fecha y Hora",
+                    },
+                    axisY:[{
+														title: "Temperatura",
+														lineColor: "#C24642",
+														tickColor: "#C24642",
+														labelFontColor: "#C24642",
+														titleFontColor: "#C24642",
+														suffix: "°C"
+                            },
+                            {
+                            title: "Humedad",
+                            lineColor: "#369EAD",
+                            tickColor: "#369EAD",
+                            labelFontColor: "#369EAD",
+                            titleFontColor: "#369EAD",
+                            suffix: "%"
+                            }],
+                    toolTip: {
+
+		                          shared: true
+                            },
+                    legend: {
+		                        cursor: "pointer",
+                            verticalAlign: "top",
+                            horizontalAlign: "center",
+		                        itemclick: toggleDataSeries
+	                          },
+                        
+                    data: [{type: "spline",
+		                        showInLegend: true,
+                            markerSize: 0,
+                            yValueFormatString: "##.##°C",
+                            color: "#C24642",
+		                        axisYIndex: 0, 
+		                        name: "Temperatura",
+                            dataPoints: datos1
+	                        	},
+                          {				
+			                      type: "spline",
+		                        showInLegend: true,
+                            yValueFormatString: "##,##%",
+                            markerSize: 0,
+                            color: "#368EAA",
+		                        axisYIndex: 1,
+		                        name: "Humedad",
+		                        dataPoints: datos2
+	                        },
+                          {type: "spline",
+		                        showInLegend: true,
+                            markerSize: 0,
+                            yValueFormatString: "##.##°C",
+                            color: "#00F5E2",
+		                        name: "Temperatura infrarroja interna",
+                            dataPoints: datos3
+	                        	},
+                          {				
+			                      type: "spline",
+		                        showInLegend: true,
+                            markerSize: 0,
+                            yValueFormatString: "##.##°C",
+                            color: "#49FC1D",
+		                        name: "Temperatura infrarroja objeto",
+		                        dataPoints: datos4
+	                        }],
+                });
+                
+                function toggleDataSeries(e) {
+                          if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+		                          e.dataSeries.visible = false;
+	                        } else {
+		                              e.dataSeries.visible = true;
+                             }
+	                          e.chart.render();
+                            }
+                //funcion que actualiza los datos cada 500 mili segundos
+                setInterval(function () {
+                    updateChart()
+                }, updateInterval);
+            
+            }
+            //obtiene propiedades para los graficos
+            
+        </script>
+        <script type="text/javascript" src="assets/script/canvasjs.min.js"></script>
+        <script type="text/javascript" src="assets/script/jquery-2.2.3.min.js"></script>
+    </head>
+    <body>
+        <div id="chartContainer" style="height: 600px; width: 100%;">
+        </div>
+        
+    </body>
+</html>
