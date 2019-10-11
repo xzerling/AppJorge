@@ -1,9 +1,9 @@
 <?php
 #Datos para inicial la sesion
-$db_host = "localhost";
-$db_user = "root";
-$db_password = "";
-$db_name = "ejemplo";
+$db_host = "citra-test.cmmqgr4kvqxz.us-east-2.rds.amazonaws.com";
+$db_user = "admin";
+$db_password = "12345678";
+$db_name = "citra";
 $db_connection = mysqli_connect($db_host, $db_user, $db_password);
 mysqli_select_db($db_connection,$db_name);
 
